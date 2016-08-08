@@ -4,44 +4,70 @@ package com.offerciti.model;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
+@Table(name="offers")
 public class Offer implements Serializable{
   /**
    * 
    */
   private static final long serialVersionUID = 1L;
+  @Column(name="offer_code")
   private @GeneratedValue(strategy = GenerationType.IDENTITY) @Id int offerCode;
-  
+  @Column(name="merchant_id")
   private int merchantId;
+  @Column(name="branch_id")
   private int branchId;
+  @Column(name="offer_name")
   private String offerName;
+  @Column(name="from_date")
   @Temporal(TemporalType.TIMESTAMP)
   private Calendar fromDate;
+  @Column(name="to_date")
   @Temporal(TemporalType.TIMESTAMP)
   private Calendar toDate;
+  @Column(name="status")
   private short status;
-  private int category_code;
+  @Column(name="category_code")
+  private int categoryCode;
+  @Column(name="like_count")
   private int likeCount;
+  @Column(name="view_count")
   private int viewCount;
+  @Column(name="fb_share_count")
   private int fbShareCount;
+  @Column(name="twitter_share_count")
   private int twitterShareCount;
+  @Column(name="google_plus_share_count")
   private int googlePlusShareCount;
+  @Column(name="email_share_count")
   private int emailShareCount;
+  @Column(name="whats_app_share_count")
   private int whatsPppShareCount;
+  @Column(name="sms_share_count")
   private int smsShareCount;
+  @Column(name="description")
   private String description;
+  @Column(name="discount_type")
   private String discountType;
+  @Column(name="discount")
   private String discount;
+  @Column(name="buy_count")
   private int buyCount;
+  @Column(name="get_count")
   private int getCount;
-  private String social_media_image_url;
+  @Column(name="social_media_image_url")
+  private String socialMediaImageUrl;
+  @Column(name="transaction_id")
   private int transactionId;
+  @Column(name="created_date")
   @Temporal(TemporalType.TIMESTAMP)
   private Calendar createdDate;
   public int getOfferCode() {
@@ -86,11 +112,11 @@ public class Offer implements Serializable{
   public void setStatus(short status) {
     this.status = status;
   }
-  public int getCategory_code() {
-    return category_code;
+  public int getCategoryCode() {
+    return categoryCode;
   }
-  public void setCategory_code(int category_code) {
-    this.category_code = category_code;
+  public void setCategoryCode(int category_code) {
+    this.categoryCode = category_code;
   }
   public int getLikeCount() {
     return likeCount;
@@ -170,11 +196,11 @@ public class Offer implements Serializable{
   public void setGetCount(int getCount) {
     this.getCount = getCount;
   }
-  public String getSocial_media_image_url() {
-    return social_media_image_url;
+  public String getSocialMediaImageUrl() {
+    return socialMediaImageUrl;
   }
-  public void setSocial_media_image_url(String social_media_image_url) {
-    this.social_media_image_url = social_media_image_url;
+  public void setSocial_media_image_url(String socialMediaImageUrl) {
+    this.socialMediaImageUrl = socialMediaImageUrl;
   }
   public int getTransactionId() {
     return transactionId;
