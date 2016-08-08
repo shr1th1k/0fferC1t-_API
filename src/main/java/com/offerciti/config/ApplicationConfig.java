@@ -36,6 +36,7 @@ public class ApplicationConfig {
   private static final String PROPERTY_NAME_HIBERNATE_NAMING_STRATEGY = "hibernate.ejb.naming_strategy";
   private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
   private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "entitymanager.packages.to.scan";
+  private static final String PROPERTY_NAME_SPRING_NAMING_STRATEGY="spring.jpa.hibernate.naming-strategy";
 
   @Resource
   private Environment environment;
@@ -65,6 +66,7 @@ public class ApplicationConfig {
       Properties jpaProterties = new Properties();
       jpaProterties.put(PROPERTY_NAME_HIBERNATE_DIALECT, environment.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
       jpaProterties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, environment.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
+      jpaProterties.put(PROPERTY_NAME_SPRING_NAMING_STRATEGY, environment.getRequiredProperty(PROPERTY_NAME_SPRING_NAMING_STRATEGY));
       return em;
   }
   
