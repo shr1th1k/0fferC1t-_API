@@ -1,7 +1,7 @@
 
 package com.offerciti.model;
 
-public class Ad {
+public class Offer {
   private String name;
   
   public String getName() {
@@ -12,7 +12,7 @@ public class Ad {
     this.name = name;
   }
 
-  public Ad(String name){
+  public Offer(String name){
     this.name = name; 
   }
   
