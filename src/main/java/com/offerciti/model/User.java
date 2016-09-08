@@ -18,6 +18,14 @@ public class User implements Serializable{
   /**
    * 
    */
+  public User(){
+    
+  }
+  public User(User user){
+    this.email = user.email;
+    this.password = user.password;
+    
+  }
   private static final long serialVersionUID = 1L;
   private @GeneratedValue(strategy = GenerationType.IDENTITY) @Id Integer id;
   private String title;
@@ -28,8 +36,8 @@ public class User implements Serializable{
   private String dob;
   @Column(name="contact_number")
   private String contactNumber;
-  private String email;
-  private String password;
+  protected String email;
+  protected String password;
   private String status;
   private String gender;
   private String area;

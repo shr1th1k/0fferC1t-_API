@@ -4,16 +4,21 @@ import java.util.Properties;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import com.offerciti.security.OfferCitiUserDetailsService;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -24,6 +29,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @PropertySource("classpath:application.properties")
 @EnableSwagger2
+@ComponentScan(basePackageClasses=OfferCitiUserDetailsService.class)
 public class ApplicationConfig {
   
   private static final String PROPERTY_NAME_DATABASE_DRIVER = "spring.datasource.driver-class-name";
@@ -77,6 +83,16 @@ public class ApplicationConfig {
         .apis(RequestHandlerSelectors.any())              
         .paths(PathSelectors.any())                          
         .build();                                           
+  }
+  
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+      return new WebMvcConfigurerAdapter() {
+          @Override
+          public void addCorsMappings(CorsRegistry registry) {
+              registry.addMapping("/offerciti/**");
+          }
+      };
   }
 
 }
