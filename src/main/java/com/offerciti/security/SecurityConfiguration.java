@@ -51,7 +51,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     .authenticationEntryPoint(restAuthenticationEntryPoint)
     .and()
     .authorizeRequests()
-    .antMatchers("/offerciti/*").authenticated()
+    .antMatchers("/offerciti/user/create").permitAll()
+    .antMatchers("/configuration/ui/**").permitAll()
+    .antMatchers("/swagger-resources/**").permitAll()
+    .antMatchers("/swagger-ui.html").permitAll()
+    .antMatchers("/webjars/**").permitAll()
+    .antMatchers("/v2/api-docs").permitAll()
+    .antMatchers("/configuration/security").permitAll()
     .and()
     .formLogin()
     .permitAll()
@@ -59,7 +65,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     .successHandler(authenticationSuccessHandler)
     .failureHandler(new SimpleUrlAuthenticationFailureHandler())
     .and()
-    .logout();
+    .logout().permitAll();
+    
+    http.authorizeRequests().anyRequest().authenticated();
 
     /*http
     .csrf()
