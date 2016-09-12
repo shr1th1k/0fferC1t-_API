@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.offerciti.util.OffecitiRequestAwareAuthenticationSuccessHandler;
 import com.offerciti.util.RestAuthenticationEntryPoint;
@@ -42,6 +42,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       return super.userDetailsServiceBean();
   }
 
+  @Bean
+  public AuthenticationFilter authenticationTokenFilterBean() throws Exception {
+    AuthenticationFilter authenticationTokenFilter = new AuthenticationFilter();
+    authenticationTokenFilter.setAuthenticationManager(authenticationManagerBean());
+    return authenticationTokenFilter;
+  }
   
   @Override
   protected void configure(org.springframework.security.config.annotation.web.builders.HttpSecurity http) throws Exception {
@@ -52,22 +58,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     .and()
     .authorizeRequests()
     .antMatchers("/offerciti/user/create").permitAll()
+    .antMatchers("/offerciti/authentication/**").permitAll()
     .antMatchers("/configuration/ui/**").permitAll()
     .antMatchers("/swagger-resources/**").permitAll()
     .antMatchers("/swagger-ui.html").permitAll()
     .antMatchers("/webjars/**").permitAll()
     .antMatchers("/v2/api-docs").permitAll()
     .antMatchers("/configuration/security").permitAll()
-    .and()
-    .formLogin()
-    .permitAll()
-    .loginProcessingUrl("/offerciti/login")
-    .successHandler(authenticationSuccessHandler)
-    .failureHandler(new SimpleUrlAuthenticationFailureHandler())
-    .and()
-    .logout().permitAll();
+    .anyRequest().authenticated();
     
-    http.authorizeRequests().anyRequest().authenticated();
+    http
+    .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
     /*http
     .csrf()
@@ -98,9 +99,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       /*auth.inMemoryAuthentication().
         withUser("temporary").password("temporary").roles("ADMIN").and().
         withUser("user").password("userPass").roles("USER");*/
-    DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+    /*DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
     authenticationProvider.setUserDetailsService(offerCitiUserDetailsService);
-    auth.authenticationProvider(authenticationProvider);
+    auth.authenticationProvider(authenticationProvider);*/
+    auth.userDetailsService(offerCitiUserDetailsService);
   }
   
   

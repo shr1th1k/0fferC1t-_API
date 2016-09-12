@@ -1,7 +1,6 @@
 
 package com.offerciti.model;
 
-import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -14,7 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
 @Table(name="offers")
-public class Offer implements Serializable{
+public class Offer extends OffercitiSerializable{
   /**
    * 
    */

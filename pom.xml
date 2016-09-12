@@ -96,6 +96,14 @@
         <artifactId>spring-security-config</artifactId>
         <version>4.0.3.RELEASE</version>
      </dependency>
+     <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+    <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt</artifactId>
+    <version>0.6.0</version>
+</dependency>
+     
     </dependencies>
     
 

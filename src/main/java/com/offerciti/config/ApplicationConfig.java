@@ -19,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.offerciti.security.OfferCitiUserDetailsService;
+import com.offerciti.util.AuthenticationUtils;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -29,7 +30,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @PropertySource("classpath:application.properties")
 @EnableSwagger2
-@ComponentScan(basePackageClasses=OfferCitiUserDetailsService.class)
+@ComponentScan(basePackageClasses={OfferCitiUserDetailsService.class,AuthenticationUtils.class})
 public class ApplicationConfig {
   
   private static final String PROPERTY_NAME_DATABASE_DRIVER = "spring.datasource.driver-class-name";
