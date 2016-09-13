@@ -1,12 +1,18 @@
 package com.offerciti.model;
 
 import java.util.Calendar;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -51,6 +57,11 @@ public class User extends OffercitiSerializable{
   @Column(name="last_login")
   @Temporal(TemporalType.TIMESTAMP)
   private Calendar lastLogin;
+  @ElementCollection(targetClass=java.lang.String.class,fetch=FetchType.EAGER)
+  @JoinTable(name="authorities",joinColumns=@JoinColumn(name="user_id"))
+  @Column(name="authority")
+  protected Set<String> grantedAuthorities;
+  
   public Integer getId() {
     return id;
   }
@@ -154,5 +165,10 @@ public class User extends OffercitiSerializable{
     this.lastLogin = lastLogin;
   }
   
-
+  public Set<String> getGrantedAuthorities() {
+    return grantedAuthorities;
+  }
+  public void setAuthorities(Set<String> grantedAuthorities) {
+    this.grantedAuthorities = grantedAuthorities;
+  }
 }

@@ -1,9 +1,11 @@
 package com.offerciti.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -38,7 +40,7 @@ public class OfferCitiUserDetailsService implements UserDetailsService {
   }
   
   private static final class OfferCitiUserDetails extends User implements UserDetails{
-    Collection<? extends GrantedAuthority> list = null;
+    Collection<SimpleGrantedAuthority> list = null;
     
     /**
      * 
@@ -50,6 +52,12 @@ public class OfferCitiUserDetailsService implements UserDetailsService {
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
+      list = new ArrayList<SimpleGrantedAuthority>();
+      if(this.grantedAuthorities != null && this.grantedAuthorities.size() > 0){
+        for(String grantedAuthority: this.grantedAuthorities){
+          list.add(new SimpleGrantedAuthority(grantedAuthority));
+        }
+      }
       return this.list;
     }
 
